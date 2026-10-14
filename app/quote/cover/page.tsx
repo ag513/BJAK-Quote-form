@@ -27,12 +27,22 @@ export default function coverPage(){
 
         return(
               <form onSubmit={handleSubmit(onSubmit)}>
-                    <select {...register('coverType')} defaultValue="">
+                    <label htmlFor="coverType">Cover type</label>
+                    <select id="coverType"
+                        {...register('coverType')}
+                        defaultValue=""
+                        aria-invalid={errors.coverType ? 'true' : 'false'}
+                        aria-describedby={errors.coverType ? 'coverType-error' : undefined}
+                    >
                         <option value="" disabled>Select cover type</option>
                         <option value="third-party">Third Party</option>
                         <option value="comprehensive">Comprehensive</option>
                     </select>
-                    {errors.coverType && <p style={{ color: 'red' }}>{errors.coverType.message}</p>}
+                     {errors.coverType && (
+                        <p id="coverType-error" role="alert" style={{ color: 'red' }}>
+                        {errors.coverType.message}
+                        </p>
+                    )}
                     <button type="submit">Submit</button>
                 </form>
         );
