@@ -22,11 +22,24 @@ export default function DriverPage(){
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <input {...register('driverName')} placeholder="Driver name"/>
-            {errors.driverName && <p style={{color:'red'}}>{errors.driverName.message}</p>}
+            <label htmlFor="driverName">Driver name</label>
+            <input id="driverName" 
+                {...register('driverName')} 
+                placeholder="Driver name"
+                aria-invalid={errors.driverName ? 'true' : 'false' }
+                aria-describedby={errors.driverName ? 'driverName-error' : undefined} 
+            />
+            {errors.driverName && <p id="driverName-error" role="alert" style={{color:'red'}}>{errors.driverName.message}</p>}
 
-            <input {...register('driverAge')} placeholder="Driver age"/>
-            {errors.driverAge && <p style={{color:'red'}}>{errors.driverAge.message}</p>}
+             <label htmlFor="driverAge">Driver name</label>
+            <input 
+                id="driverAge" 
+                {...register('driverAge')} 
+                placeholder="Driver age"
+                aria-invalid={errors.driverAge ? 'true': 'false'}
+                aria-describedby={errors.driverAge ? 'driverAge-error': undefined}
+            />
+            {errors.driverAge && <p role="alert" id="driverAge-error" style={{color:'red'}}>{errors.driverAge.message}</p>}
 
             <button type="submit">Next</button>
         </form>

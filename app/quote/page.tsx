@@ -23,8 +23,18 @@ export default function QuotePage(){
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <input {...register('vehicleReg')} placeholder="Vehicle Registration"/>
-            {errors.vehicleReg && <p style={{color:'red'}}>{errors.vehicleReg.message}</p>}
+            <label htmlFor="vehicleReg">Vehicle registration</label>
+            <input
+                id="vehicleReg"
+                {...register('vehicleReg')}
+                aria-invalid={errors.vehicleReg ? 'true' : 'false'}
+                aria-describedby={errors.vehicleReg ? 'vehicleReg-error' : undefined}
+            />
+                {errors.vehicleReg && (
+                    <p id="vehicleReg-error" role="alert" style={{ color: 'red' }}>
+                        {errors.vehicleReg.message}
+                    </p>
+                )}
 
             <button type="submit">Next</button>
         </form>
