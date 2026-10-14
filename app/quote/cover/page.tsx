@@ -16,7 +16,7 @@ export default function coverPage(){
 
         function onSubmit(data: CoverFormData){
             const vehicle = JSON.parse(sessionStorage.getItem('quote-vehicle') || '{}');
-            const driver = JSON.parse(sessionStorage.getItem('quote-driverr') || '{}');
+            const driver = JSON.parse(sessionStorage.getItem('quote-driver') || '{}');
             const fullQuote = {...vehicle, ...driver, ...data};
 
             console.log('FUll quote submitted', fullQuote);
