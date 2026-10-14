@@ -3,8 +3,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { vehicleSchema, VehicleFormData } from "./schema";
+import { useRouter } from "next/navigation";
 
 export default function QuotePage(){
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -15,7 +17,8 @@ export default function QuotePage(){
 
 
     function onSubmit(data: VehicleFormData){
-        console.log('valid data', data);
+        sessionStorage.setItem('quote-vehicle', JSON.stringify(data));
+        router.push('/quote/driver');
     }
 
     return (
