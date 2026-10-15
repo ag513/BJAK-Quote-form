@@ -3,8 +3,10 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { coverSchema, CoverFormData } from '../schema';
+import { useRouter } from 'next/navigation';
 
 export default function coverPage(){
+    const router = useRouter();
     const {
             register,
             handleSubmit,
@@ -19,10 +21,12 @@ export default function coverPage(){
             const driver = JSON.parse(sessionStorage.getItem('quote-driver') || '{}');
             const fullQuote = {...vehicle, ...driver, ...data};
 
-            console.log('FUll quote submitted', fullQuote);
-
+            console.log('FUll quote with tracking submitted', fullQuote);
+            sessionStorage.setItem('full-quote', JSON.stringify(fullQuote))
             sessionStorage.removeItem('quote-vehicle');
             sessionStorage.removeItem('quote-driver');
+
+            router.push('/quote/results');
         }
 
         return(
