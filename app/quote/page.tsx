@@ -3,18 +3,26 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { vehicleSchema, VehicleFormData } from "./schema";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams  } from "next/navigation";
+import { Suspense, useEffect } from "react";
 
-export default function QuotePage(){
+function QuoteFormInner(){
     const router = useRouter();
+    const searchParams = useSearchParams();
     const {
         register,
         handleSubmit,
+        setValue,
         formState:{errors},
     } = useForm<VehicleFormData>({
         resolver: zodResolver(vehicleSchema),
     });
 
+    useEffect(()=>{
+        setValue('utmSource', searchParams.get('utm_source') || '');
+        setValue('utmMedium', searchParams.get('utm_medium') || '');
+        setValue('utmCampaign', searchParams.get('utm_campaign') || '');
+    }, [searchParams, setValue])
 
     function onSubmit(data: VehicleFormData){
         sessionStorage.setItem('quote-vehicle', JSON.stringify(data));
@@ -23,6 +31,10 @@ export default function QuotePage(){
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
+            <input type="hidden" {...register('utmSource')} />
+            <input type="hidden" {...register('utmMedium')} />
+            <input type="hidden" {...register('utmCampaign')} />
+
             <label htmlFor="vehicleReg">Vehicle registration</label>
             <input
                 id="vehicleReg"
@@ -38,5 +50,13 @@ export default function QuotePage(){
 
             <button type="submit">Next</button>
         </form>
+    );
+}
+
+export default function QuotePage(){
+    return(
+        <Suspense fallback={null}>
+            <QuoteFormInner></QuoteFormInner>
+        </Suspense>
     );
 }

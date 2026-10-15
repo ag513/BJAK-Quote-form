@@ -2,6 +2,9 @@ import { z } from 'zod';
 
 export const vehicleSchema = z.object({
     vehicleReg: z.string().min(1, 'Vehicle Reg is Required'),
+    utmSource: z.string().optional(),
+    utmMedium: z.string().optional(),
+    utmCampaign: z.string().optional()
 })
 
 export const driverSchema = z.object({
